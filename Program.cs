@@ -12,7 +12,12 @@ class Program
         Console.Clear();
 
         Task2();
+       
+        Console.WriteLine("\nНатиснiть будь-яку клавiшу...");
+        Console.ReadKey();
+        Console.Clear();
 
+        Task3();
         Console.WriteLine("\nНатиснiть будь-яку клавiшу для завершення...");
         Console.ReadKey();
 
@@ -70,6 +75,42 @@ class Program
         Console.WriteLine();
         Console.WriteLine("Обидвi операцiї викликають помилки компiляцiї,");
         Console.WriteLine("оскiльки використано ключове слово event.");
+    }
+    static void Task3()
+    {
+        Console.WriteLine("========== Завдання 3 ==========\n");
+
+        Func<double, double> discountCalculator = null!;
+
+        discountCalculator += price => price * 0.95;
+        discountCalculator += price => price * 0.90;
+        discountCalculator += price => price - 100;
+
+        Console.WriteLine("Стандартний виклик Func:");
+
+        double result = discountCalculator(1000);
+
+        Console.WriteLine($"Результат = {result}");
+
+        Console.WriteLine();
+
+        Console.WriteLine("Послiдовне застосування знижок:");
+
+        List<Func<double, double>> discounts = new List<Func<double, double>>
+        {
+            price => price * 0.95,
+            price => price * 0.90,
+            price => price - 100
+        };
+
+        double finalPrice = 1000;
+
+        foreach (var discount in discounts)
+        {
+            finalPrice = discount(finalPrice);
+        }
+
+        Console.WriteLine($"Кiнцева цiна = {finalPrice}");
     }
 }
 class BankTerminal
